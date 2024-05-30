@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database
+data:
+  DB_NAME: postgres
+  DB_USER: postgres
+  DB_HOST: "database-postgresql.default.svc.cluster.local"
+  DB_PORT: "5432"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: database-secret
+type: Opaque
+data:
+  postgres-password: Z3F1ZGFjaXR5

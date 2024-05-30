@@ -1,0 +1,22 @@
+version: 0.2
+env:
+  variables:
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_ACCESS_KEY_ID:  "$AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+    AWS_SESSION_TOKEN: "$AWS_SESSION_TOKEN"
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 196690624277.dkr.ecr.us-east-1.amazonaws.com
+
+  build:
+    commands:
+      - echo '$(date)'
+      - docker images
+      - docker build -t 196690624277.dkr.ecr.us-east-1.amazonaws.com/udacity:latest .
+  post_build:
+    commands:
+      - docker push 196690624277.dkr.ecr.us-east-1.amazonaws.com/udacity:latest
